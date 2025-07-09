@@ -27,7 +27,14 @@ class App{
         this.camera.add( this.dummyCam );
         
 		this.scene = new THREE.Scene();
+        this.scene.background = new THREE.Color(0xfce4ec); // light pink
         this.scene.add( this.dolly );
+        // Add rotating cube in front of camera
+            const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+            const cubeMaterial = new THREE.MeshStandardMaterial({ color: 0xff69b4 }); // pink cube
+            this.testCube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+            this.testCube.position.set(0, 1.5, -3);
+            this.scene.add(this.testCube);
         
 		const ambient = new THREE.HemisphereLight(0xFFFFFF, 0xAAAAAA, 0.8);
 		this.scene.add(ambient);
@@ -357,6 +364,10 @@ class App{
         
         this.stats.update();
 		this.renderer.render(this.scene, this.camera);
+        // 🔁 Rotate the test cube
+            if (this.testCube) {
+                this.testCube.rotation.y += 0.01;
+                }
 	}
 }
 
